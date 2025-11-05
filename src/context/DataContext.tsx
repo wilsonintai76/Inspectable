@@ -104,8 +104,17 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  // Collections subscriptions
+  // Collections subscriptions (only fetch when authenticated)
   useEffect(() => {
+    if (!fbUser) {
+      // Clear data when not authenticated
+      setDepartments([]);
+      setLocations([]);
+      setInspections([]);
+      setUsers([]);
+      return;
+    }
+
     let active = true;
     const fetchAll = async () => {
       const [deps, locs, ins, us] = await Promise.all([
@@ -132,7 +141,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       active = false;
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [fbUser]);
 
   // Auth methods
   const signInEmail = useCallback(async (email: string, password: string) => {
