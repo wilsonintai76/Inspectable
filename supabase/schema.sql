@@ -85,8 +85,13 @@ drop trigger if exists trg_inspections_updated_at on public.inspections;
 create trigger trg_inspections_updated_at before update on public.inspections
 for each row execute function public.set_updated_at();
 
--- Realtime publication
-alter publication supabase_realtime add table public.app_users, public.departments, public.locations, public.inspections;
+-- Realtime publication (skip if publication doesn't exist)
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime') then
+    alter publication supabase_realtime add table public.app_users, public.departments, public.locations, public.inspections;
+  end if;
+end $$;
 
 -- RLS
 alter table public.app_users enable row level security;
