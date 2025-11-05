@@ -27,9 +27,11 @@ export default function AuthPage() {
         console.log("Attempting login...");
         await signInEmail(email, password);
         console.log("Login successful - redirecting to dashboard");
-        // Force a hard redirect to bypass any caching
-        router.push("/dashboard/overview");
-        router.refresh();
+        // Use setTimeout to ensure auth state has updated before redirect
+        setTimeout(() => {
+          console.log("Executing redirect now...");
+          window.location.replace("/dashboard/overview");
+        }, 100);
       } else if (mode === "signup") {
         console.log("Attempting signup...");
         await signUp(name, email, password);
