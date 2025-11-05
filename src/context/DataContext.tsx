@@ -152,7 +152,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: prof } = await supabase.from("app_users").select("status").eq("id", user.id).single();
     if (!prof || prof.status !== "Verified") {
       await supabase.auth.signOut();
-      throw new Error("Your account is not verified yet.");
+      throw new Error("Your account is not verified yet. Please contact an administrator to verify your account.");
     }
   }, []);
 
