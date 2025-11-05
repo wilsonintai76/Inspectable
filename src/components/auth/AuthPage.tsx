@@ -22,8 +22,11 @@ export default function AuthPage() {
     setMessage(null);
     try {
       if (mode === "login") {
+        console.log("Attempting login...");
         await signInEmail(email, password);
+        console.log("Login successful - should redirect to dashboard");
       } else if (mode === "signup") {
+        console.log("Attempting signup...");
         await signUp(name, email, password);
         setMessage("Account created. Await admin verification before logging in.");
         setMode("login");
@@ -33,6 +36,7 @@ export default function AuthPage() {
         setMode("login");
       }
     } catch (err: unknown) {
+      console.error("Auth error:", err);
       const msg = err instanceof Error ? err.message : "Something went wrong";
       setMessage(msg);
     } finally {
