@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { getSupabaseAdmin } from "@/lib/supabase/server";
 
 async function requireAdmin() {
   const cookieStore = cookies();
@@ -19,6 +19,7 @@ export async function POST(req: NextRequest, { params }: { params: { uid: string
   const isAdmin = await requireAdmin();
   if (!isAdmin) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
+    const supabaseAdmin = getSupabaseAdmin();
     const body = await req.json();
     const { admin } = body as { admin?: boolean };
     // Update app_users role array
