@@ -1,6 +1,6 @@
 # Inspectable
 
-Inspectable is a Next.js (App Router) + TypeScript + Tailwind CSS web app for scheduling and managing asset inspections. It features role-based navigation, real-time data via a central React Context (DataContext), and admin-only API routes. The data/auth backend now uses Supabase (Auth + Postgres + Realtime).
+Inspectable is a Next.js (App Router) + TypeScript + Tailwind CSS web app for scheduling and managing asset inspections. It features role-based navigation, real-time data via a central React Context (DataContext), and admin-only API routes. The data/auth backend uses Supabase (Auth + Postgres + Realtime).
 
 ## Tech stack
 
