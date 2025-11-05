@@ -4,6 +4,13 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
+  
+  // Gracefully handle missing env vars in edge runtime
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.error("Middleware: Missing Supabase env vars; skipping session checks");
+    return res;
+  }
+
   const supabase = createMiddlewareClient({ req, res });
 
   const url = req.nextUrl.clone();
