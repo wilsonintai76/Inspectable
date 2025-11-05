@@ -24,7 +24,9 @@ export default function AuthPage() {
       if (mode === "login") {
         console.log("Attempting login...");
         await signInEmail(email, password);
-        console.log("Login successful - should redirect to dashboard");
+        console.log("Login successful - redirecting to dashboard");
+        // Explicit redirect after successful login
+        window.location.href = "/dashboard/overview";
       } else if (mode === "signup") {
         console.log("Attempting signup...");
         await signUp(name, email, password);
