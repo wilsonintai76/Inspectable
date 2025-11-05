@@ -315,3 +315,11 @@ If you want to test the app online, deploy the Next.js app to a host (Vercel rec
 	- Fix: Ensure SUPABASE_SERVICE_ROLE_KEY is set in host env. Also ensure your signed-in user has Admin in app_users.role[].
 - OAuth/magic link redirects don’t return to your site
 	- Fix: Confirm Supabase Auth → URL Configuration has your deployed domain in Site URL and Additional Redirect URLs.
+
+- Error: "No Output Directory named 'public' found after the Build completed"
+	- Cause: Vercel isn’t detecting the project as Next.js (or a custom Output Directory override is set).
+	- Fix:
+		1) In Vercel → Project → Settings → General, set Framework Preset to "Next.js".
+		2) In Settings → Build & Output, disable any "Override" toggles; leave Build Command empty (or "next build") and clear Output Directory (must be blank). Do not set it to "public".
+		3) Ensure a minimal `vercel.json` exists with `{ "version": 2, "framework": "nextjs" }` (already included in this repo).
+		4) Redeploy.
