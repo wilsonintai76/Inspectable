@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useData } from "@/context/DataContext";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function AuthPage() {
+  const router = useRouter();
   const { signInEmail, signInGoogle, signUp, resetPassword } = useData();
   const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
   const [email, setEmail] = useState("");
@@ -25,8 +27,9 @@ export default function AuthPage() {
         console.log("Attempting login...");
         await signInEmail(email, password);
         console.log("Login successful - redirecting to dashboard");
-        // Explicit redirect after successful login
-        window.location.href = "/dashboard/overview";
+        // Force a hard redirect to bypass any caching
+        router.push("/dashboard/overview");
+        router.refresh();
       } else if (mode === "signup") {
         console.log("Attempting signup...");
         await signUp(name, email, password);
